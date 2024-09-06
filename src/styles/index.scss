@@ -1,0 +1,59 @@
+$font-family-sans-serif: "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial,
+  sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+  "Noto Color Emoji" !default;
+
+$body-color: #ffffff !default;
+
+// $primary: #009ade !default;
+// $secondary: #e30097 !default;
+
+@import "../../node_modules/bootstrap/scss/bootstrap";
+
+html {
+  height: -webkit-fill-available;
+  font-size: 16px;
+  width: 100%;
+}
+body {
+  min-height: 100vh;
+  /* mobile viewport bug fix */
+  min-height: -webkit-fill-available;
+  display: flex;
+}
+#__next {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  position: relative;
+}
+#main-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  margin-left: 0;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+:root {
+  --teal: #00b2a9;
+  --orange: #ff5e5b;
+  --navy: #002b5b;
+  --navymid: #005177;
+  --white: #dcdcdc;
+  --yellow: #ffc141;
+}
+
+#main-container {
+  background: var(--navy) linear-gradient(var(--teal), var(--navymid)) no-repeat;
+}
