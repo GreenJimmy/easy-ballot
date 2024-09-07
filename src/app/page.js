@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -8,13 +9,13 @@ export default function Home() {
     <>
       <Row className="my-5">
         <Col xs="0" lg="3" className="align-items-center d-none d-lg-flex">
-          <img src="/img/stock_l.jpg" className="w-100" />
+          <img src="/img/stock_l.jpg" className="w-100" alt="Just Voted" />
         </Col>
         <Col xs="12" lg="6" className="d-flex align-items-center">
-          <img src="/img/stock_c.jpg" className="w-100" />
+          <img src="/img/stock_c.jpg" className="w-100" alt="Jst Voted" />
         </Col>
         <Col lg="3" className="align-items-center d-none d-lg-flex">
-          <img src="/img/stock_r.jpg" className="w-100" />
+          <img src="/img/stock_r.jpg" className="w-100" alt="Just Voted" />
         </Col>
       </Row>
       <Row>
@@ -55,11 +56,15 @@ export default function Home() {
                 className="d-flex align-items-center text-center mb-4 mb-lg-0"
               >
                 <h1 className="m-0" id="how-it-works">
-                  HOW IT WORKS
+                  How it Works
                 </h1>
               </Col>
               <Col lg="6" xxl="8" className="d-flex align-items-center">
-                <img src="/img/how-it-works.jpg" className="w-100" />
+                <img
+                  src="/img/how-it-works.jpg"
+                  className="w-100"
+                  alt="How it Works"
+                />
               </Col>
             </Row>
             <Row>
@@ -88,21 +93,33 @@ export default function Home() {
             </Row>
             <Row>
               <Col lg="4" className="text-center mt-5">
-                <img src="/img/create.svg" style={{ height: "10rem" }} />
+                <img
+                  src="/img/create.svg"
+                  style={{ height: "10rem" }}
+                  alt="Step 1 - Create"
+                />
                 <h3 className="my-3">Step 1</h3>
                 <p className="mb-0 mx-auto" style={{ maxWidth: "20rem" }}>
                   Create your customized ballot.
                 </p>
               </Col>
               <Col lg="4" className="text-center mt-5 step-2">
-                <img src="/img/share.svg" style={{ height: "10rem" }} />
+                <img
+                  src="/img/share.svg"
+                  style={{ height: "10rem" }}
+                  alt="Step 2 - Share"
+                />
                 <h3 className="my-3">Step 2</h3>
                 <p className="mb-0 mx-auto" style={{ maxWidth: "20rem" }}>
                   Share your ballot link with your friends and family.
                 </p>
               </Col>
               <Col lg="4" className="text-center mt-5 step-3">
-                <img src="/img/win.svg" style={{ height: "10rem" }} />
+                <img
+                  src="/img/win.svg"
+                  style={{ height: "10rem" }}
+                  alt="Step 3 - Win"
+                />
                 <h3 className="my-3">Step 3</h3>
                 <p className="mb-0 mx-auto" style={{ maxWidth: "20rem" }}>
                   Sit back and watch your favorite candidates win all across the

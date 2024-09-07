@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Head from "next/head";
 import { Antonio, Montserrat } from "next/font/google";
 import Link from "next/link";
@@ -47,7 +48,11 @@ export default function RootLayout({ children }) {
                   className="d-flex align-items-center"
                   as={Link}
                 >
-                  <img src="/img/logo.svg" className="me-3" />
+                  <img
+                    src="/img/logo.svg"
+                    className="me-3"
+                    alt="EasyBallot.vote"
+                  />
                   <span property="name">EasyBallot.vote</span>
                 </NavbarBrand>
                 <NavbarToggle />
@@ -88,6 +93,7 @@ export default function RootLayout({ children }) {
                         src="/img/logo-button.svg"
                         className="w-100 mx-auto"
                         style={{ maxWidth: "300px" }}
+                        alt="EasyBallot.vote"
                       />
                     </Link>
                   </Col>
