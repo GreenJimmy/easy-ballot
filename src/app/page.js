@@ -72,7 +72,7 @@ export default function Home() {
                   <strong>We thought so.</strong>
                 </p>
                 <p>
-                  Well, we're here to make your life a whole lot easier.
+                  Well, we&apos;re here to make your life a whole lot easier.
                   EasyBallot.vote is a tool that helps you create a customized
                   ballot for any and all races you want to weigh in on across
                   the state. Once you have made your ballot, you can share the
@@ -120,7 +120,7 @@ export default function Home() {
       </Row>
       <Row>
         <Col className="text-center">
-          <h2 className="mb-4">Let's Get Started!</h2>
+          <h2 className="mb-4">Let&apos;s Get Started!</h2>
           <Link href="/get-started">
             <Button size="lg">Get Started</Button>
           </Link>
