@@ -1,14 +1,13 @@
 import Head from "next/head";
 import { Antonio, Montserrat } from "next/font/google";
-import {
-  Container,
-  Navbar,
-  NavbarBrand,
-  NavbarToggle,
-  NavbarCollapse,
-  Nav,
-  NavLink,
-} from "react-bootstrap";
+import Link from "next/link";
+import Container from "react-bootstrap/Container";
+import Navbar from "react-bootstrap/Navbar";
+import NavbarBrand from "react-bootstrap/NavbarBrand";
+import NavbarToggle from "react-bootstrap/NavbarToggle";
+import NavbarCollapse from "react-bootstrap/NavbarCollapse";
+import Nav from "react-bootstrap/Nav";
+import NavLink from "react-bootstrap/NavLink";
 
 import "../styles/index.scss";
 
@@ -33,20 +32,6 @@ export default function RootLayout({ children }) {
   return (
     <>
       <Head>
-        <meta charset="UTF-8" />
-
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&display=swap"
-          rel="stylesheet"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
-          rel="stylesheet"
-        />
-
-        <link rel="icon" href="/img/logo.svg" />
         <title>Easy Ballot</title>
       </Head>
       <html lang="en" className={`${montserrat.variable} ${antonio.variable}`}>
@@ -54,14 +39,20 @@ export default function RootLayout({ children }) {
           <Container id="main-container" fluid className="g-0">
             <Navbar variant="dark">
               <Container>
-                <NavbarBrand href="/" className="d-flex align-items-center">
+                <NavbarBrand
+                  href="/"
+                  className="d-flex align-items-center"
+                  as={Link}
+                >
                   <img src="/img/logo.svg" className="me-3" />
                   <span property="name">EasyBallot.vote</span>
                 </NavbarBrand>
                 <NavbarToggle />
                 <NavbarCollapse className="justify-content-end">
                   <Nav className="ms-auto">
-                    <NavLink href="#home">Home</NavLink>
+                    <NavLink href="/" as={Link}>
+                      Home
+                    </NavLink>
                     <NavLink href="mailto:info@downballot.app">
                       Contact Us
                     </NavLink>
