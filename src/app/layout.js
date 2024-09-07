@@ -1,7 +1,28 @@
 import Head from "next/head";
-import { Container, Row, Col } from "react-bootstrap";
+import { Antonio, Montserrat } from "next/font/google";
+import {
+  Container,
+  Navbar,
+  NavbarBrand,
+  NavbarToggle,
+  NavbarCollapse,
+  Nav,
+  NavLink,
+} from "react-bootstrap";
 
 import "../styles/index.scss";
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  variable: "--font-montserrat",
+  display: "swap",
+});
+
+const antonio = Antonio({
+  subsets: ["latin"],
+  variable: "--font-antonio",
+  display: "swap",
+});
 
 export const viewport = {
   width: "device-width",
@@ -28,23 +49,29 @@ export default function RootLayout({ children }) {
         <link rel="icon" href="/img/logo.svg" />
         <title>Easy Ballot</title>
       </Head>
-      <html lang="en">
+      <html lang="en" className={`${montserrat.variable} ${antonio.variable}`}>
         <body>
-          <Container id="main-container">
-            <Row>
-              <Col>
-                <a class="logo" href="/">
-                  <img src="/img/logo.svg" />
+          <Container id="main-container" fluid className="g-0">
+            <Navbar variant="dark">
+              <Container>
+                <NavbarBrand href="/" className="d-flex align-items-center">
+                  <img src="/img/logo.svg" className="me-3" />
                   <span property="name">EasyBallot.vote</span>
-                </a>
-              </Col>
-              <Col>
-                <a href="mailto:info@downballot.app" class="contact-us">
-                  Contact Us
-                </a>
-              </Col>
-            </Row>
-            {children}
+                </NavbarBrand>
+                <NavbarToggle />
+                <NavbarCollapse className="justify-content-end">
+                  <Nav className="ms-auto">
+                    <NavLink href="#home">Home</NavLink>
+                    <NavLink href="mailto:info@downballot.app">
+                      Contact Us
+                    </NavLink>
+                  </Nav>
+                </NavbarCollapse>
+              </Container>
+            </Navbar>
+            <Container id="content" fluid>
+              <Container>{children}</Container>
+            </Container>
           </Container>
         </body>
       </html>
