@@ -71,7 +71,7 @@ export default function Home() {
               <Col>
                 <p className="mt-5">
                   Do your friends call you asking how they should fill out their
-                  ballot this year?
+                  ballot each year?
                 </p>
                 <p>
                   <strong>We thought so.</strong>

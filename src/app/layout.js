@@ -53,7 +53,7 @@ export default function RootLayout({ children }) {
                     className="me-3"
                     alt="EasyBallot.vote"
                   />
-                  <span property="name">EasyBallot.vote</span>
+                  <span property="name">EasyBallot</span>
                 </NavbarBrand>
                 <NavbarToggle />
                 <NavbarCollapse className="justify-content-end">

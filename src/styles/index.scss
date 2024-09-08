@@ -59,6 +59,7 @@ input[type="number"] {
 #main-container {
   background: linear-gradient(var(--teal), var(--navymid)) no-repeat;
   flex-shrink: 1;
+  min-width: 365px;
 }
 #content {
   background: rgba(0, 0, 0, 0.1);
