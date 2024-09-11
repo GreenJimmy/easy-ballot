@@ -3,6 +3,7 @@ $primary: #ffc141 !default;
 $secondary: #002b5b !default;
 $btn-border-width: 2px;
 $input-color: #111111 !default;
+$input-placeholder-color: #888888;
 
 @import "../../node_modules/bootstrap/scss/bootstrap";
 
@@ -188,7 +189,6 @@ hr {
     color: black;
   }
 }
-
 
 .ballot {
   background-color: #f2f2f2f2;
