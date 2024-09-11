@@ -1,19 +1,23 @@
-"use client";
-
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
+import { headers } from "next/headers";
+
+import UserLanding from "./user-landing";
+import { getSubDomain } from "../scripts/utils";
 
 export default function Home() {
-  return (
+  const subDomain = getSubDomain(headers().get("host"));
+
+  return !subDomain ? (
     <>
-      <Row className="my-5">
-        <Col xs="0" lg="3" className="align-items-center d-none d-lg-flex">
+      <Row className="mb-5">
+        <Col lg="3" className="align-items-center d-none d-lg-flex">
           <img src="/img/stock_l.jpg" className="w-100" alt="Just Voted" />
         </Col>
-        <Col xs="12" lg="6" className="d-flex align-items-center">
+        <Col lg="6" className="d-flex align-items-center">
           <img src="/img/stock_c.jpg" className="w-100" alt="Jst Voted" />
         </Col>
         <Col lg="3" className="align-items-center d-none d-lg-flex">
@@ -146,5 +150,7 @@ export default function Home() {
         </Col>
       </Row>
     </>
+  ) : (
+    <UserLanding subDomain={subDomain} />
   );
 }

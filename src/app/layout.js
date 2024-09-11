@@ -16,7 +16,7 @@ import Nav from "react-bootstrap/Nav";
 import NavLink from "react-bootstrap/NavLink";
 import Button from "react-bootstrap/Button";
 
-import TopNav from "./components/nav";
+import TopNav from "../components/nav";
 
 import "../styles/index.scss";
 
@@ -71,7 +71,7 @@ export default function RootLayout({ children }) {
                 </Container>
               </Navbar>
               <Container id="content" fluid>
-                <Container>
+                <Container className="pt-5">
                   {children}
                   <Row>
                     <Col className="mt-5"></Col>
