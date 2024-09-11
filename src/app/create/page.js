@@ -6,7 +6,7 @@ import Button from "react-bootstrap/Button";
 export default function GetStarted() {
   return (
     <>
-      <Row className="my-5">
+      <Row>
         <Col>
           <h2>Get Started Page</h2>
         </Col>

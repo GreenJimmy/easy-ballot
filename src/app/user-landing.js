@@ -34,33 +34,34 @@ export default function UserLanding() {
           <img
             src="/img/create.svg"
             style={{ height: "10rem" }}
-            alt="Step 1 - Create"
+            alt="Step 1 - Address"
           />
           <h3 className="my-3">Step 1</h3>
           <p className="mb-0 mx-auto" style={{ maxWidth: "20rem" }}>
-            Create your customized ballot.
+            Enter your address to pull up the specific ballot for your voting
+            precinct.
           </p>
         </Col>
         <Col md="4" className="text-center mt-5 ">
           <img
             src="/img/create.svg"
             style={{ height: "10rem" }}
-            alt="Step 1 - Create"
+            alt="Step 2 - Print"
           />
-          <h3 className="my-3">Step 1</h3>
+          <h3 className="my-3">Step 2</h3>
           <p className="mb-0 mx-auto" style={{ maxWidth: "20rem" }}>
-            Create your customized ballot.
+            Print or screenshot their ballot recommendations.
           </p>
         </Col>
         <Col md="4" className="text-center mt-5 ">
           <img
             src="/img/create.svg"
             style={{ height: "10rem" }}
-            alt="Step 1 - Create"
+            alt="Step 3 - View"
           />
-          <h3 className="my-3">Step 1</h3>
+          <h3 className="my-3">Step 3</h3>
           <p className="mb-0 mx-auto" style={{ maxWidth: "20rem" }}>
-            Create your customized ballot.
+            Reference it to fill out your ballot.
           </p>
         </Col>
       </Row>

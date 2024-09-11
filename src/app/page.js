@@ -41,7 +41,7 @@ export default function Home() {
               Learn More
             </Button>
           </Link>
-          <Link href="/get-started">
+          <Link href="/create">
             <Button size="lg" className="m-2 m-sm-3">
               Get Started
             </Button>
@@ -144,7 +144,7 @@ export default function Home() {
       <Row>
         <Col className="text-center">
           <h2 className="mb-4">Let&apos;s Get Started!</h2>
-          <Link href="/get-started">
+          <Link href="/create">
             <Button size="lg">Get Started</Button>
           </Link>
         </Col>
