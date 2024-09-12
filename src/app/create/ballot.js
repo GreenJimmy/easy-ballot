@@ -9,6 +9,7 @@ import Tabs from "react-bootstrap/Tabs";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
 import FormCheck from "react-bootstrap/FormCheck";
+import Alert from "react-bootstrap/Alert";
 
 import { toFormData } from "../../scripts/utils";
 import { BallotBlock } from "../../components/ballot-block";
@@ -28,10 +29,25 @@ export default function Ballot({ ballot }) {
     console.log(formDataObj);
 
     // check ballot_name
+    if (formDataObj.ballot_name.trim() === "") {
+      newErrors.push("ballot_name");
+    }
 
     // check if logo picked
+    // TODO: check if custom and if so where is the file?
+    if (formDataObj.image.trim() === "") {
+      newErrors.push("image");
+    }
 
     // check subdomain
+    if (
+      formDataObj.subdomain.trim() === "" ||
+      !formDataObj.subdomain
+        .trim()
+        .match(/^[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]$/)
+    ) {
+      newErrors.push("subdomain");
+    }
 
     setErrors(newErrors);
     return newErrors.length > 0;
@@ -46,19 +62,19 @@ export default function Ballot({ ballot }) {
     const formDataObj = {};
     formElements.forEach((formElement) => {
       if (formElement.tagName === "INPUT") {
-        if (formElement.type !== "checkbox") {
+        if (formElement.type !== "checkbox" && formElement.type !== "radio") {
           formDataObj[formElement.name] = formElement.value;
-        }
-
-        if (formElement.type === "checkbox" && formElement.checked) {
-          formDataObj[formElement.name] = true;
+        } else if (
+          (formElement.type === "checkbox" || formElement.type === "radio") &&
+          formElement.checked
+        ) {
+          formDataObj[formElement.name] =
+            formElement.type === "checkbox" ? true : formElement.value;
         }
       }
     });
 
-    const valid = validateForm(formDataObj);
-
-    if (!valid) {
+    if (validateForm(formDataObj)) {
       return false;
     }
 
@@ -66,7 +82,7 @@ export default function Ballot({ ballot }) {
 
     window.setTimeout(async () => {
       await fetch(
-        `https://${process.env.NEXT_PUBLIC_API_URI}/api/ballot/save`,
+        `https://${process.env.NEXT_PUBLIC_API_URL}/api/ballot/save`,
         {
           method: "POST",
           body: toFormData(formDataObj),
@@ -108,6 +124,12 @@ export default function Ballot({ ballot }) {
                   />
                   &apos;s Ballot Guide
                 </p>
+                {errors.indexOf("ballot_name") > -1 ? (
+                  <Alert variant="danger">
+                    Your ballots name can&apos;t be empty.
+                  </Alert>
+                ) : null}
+
                 <h5 className="mt-5">
                   2. Let&apos;s personalize it - select a graphic to go at the
                   top of your guide:
@@ -131,6 +153,11 @@ export default function Ballot({ ballot }) {
                     </div>
                   ))}
                 </div>
+                {errors.indexOf("image") > -1 ? (
+                  <Alert variant="danger">
+                    You need to attach a custom image.
+                  </Alert>
+                ) : null}
                 <h5 className="mt-5">3. Pick your vanity URL:</h5>
                 <p>
                   <Form.Control
@@ -140,6 +167,12 @@ export default function Ballot({ ballot }) {
                   />
                   .easyballot.vote
                 </p>
+                {errors.indexOf("subdomain") > -1 ? (
+                  <Alert variant="danger">
+                    Vanity URLs can not be empty and must only contain letters,
+                    numbers and dashes.
+                  </Alert>
+                ) : null}
 
                 {/* <h5 className="mt-5">
                   3. You have two options to create your guide:

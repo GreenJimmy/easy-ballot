@@ -13,7 +13,7 @@ export default async function Ballot({
   const subDomain = getSubDomain(host);
 
   const siteNameResponse = await fetch(
-    `https://${process.env.NEXT_PUBLIC_API_URI}/name/${subDomain}`,
+    `https://${process.env.NEXT_PUBLIC_API_URL}/name/${subDomain}`,
     {
       method: "GET",
     }
@@ -21,7 +21,7 @@ export default async function Ballot({
   const siteName = await siteNameResponse.text();
 
   const siteImgResponse = await fetch(
-    `https://${process.env.NEXT_PUBLIC_API_URI}/image/${subDomain}`,
+    `https://${process.env.NEXT_PUBLIC_API_URL}/image/${subDomain}`,
     {
       method: "GET",
     }
@@ -29,7 +29,7 @@ export default async function Ballot({
   const siteImage = await siteImgResponse.text();
 
   const response = await fetch(
-    `https://${process.env.NEXT_PUBLIC_API_URI}/api/ballot`,
+    `https://${process.env.NEXT_PUBLIC_API_URL}/api/ballot`,
     {
       method: "POST",
       body: toFormData({
