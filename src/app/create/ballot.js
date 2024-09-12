@@ -7,20 +7,43 @@ import Form from "react-bootstrap/Form";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import Button from "react-bootstrap/Button";
+import Spinner from "react-bootstrap/Spinner";
 import FormCheck from "react-bootstrap/FormCheck";
 
 import { toFormData } from "../../scripts/utils";
+import { BallotBlock } from "../../components/ballot-block";
 
-const logos = ["1.jpg", "2.jpg"];
+const logos = ["2.jpg", "1.jpg"];
 
 export default function Ballot({ ballot }) {
   const formRef = useRef();
 
-  const saveForm = () => {
+  const [save, setSave] = useState();
+  const [created, setCreated] = useState();
+  const [errors, setErrors] = useState([]);
+
+  const validateForm = (formDataObj) => {
+    const newErrors = [];
+
+    console.log(formDataObj);
+
+    // check ballot_name
+
+    // check if logo picked
+
+    // check subdomain
+
+    setErrors(newErrors);
+    return newErrors.length > 0;
+  };
+
+  const saveForm = (doAfterSave) => {
+    if (save) {
+      return false;
+    }
+
     const formElements = Array.from(formRef.current.elements);
-
     const formDataObj = {};
-
     formElements.forEach((formElement) => {
       if (formElement.tagName === "INPUT") {
         if (formElement.type !== "checkbox") {
@@ -33,15 +56,33 @@ export default function Ballot({ ballot }) {
       }
     });
 
-    fetch(`https://${process.env.NEXT_PUBLIC_API_URI}/api/ballot/save`, {
-      method: "POST",
-      body: toFormData(formDataObj),
-    });
+    const valid = validateForm(formDataObj);
+
+    if (!valid) {
+      return false;
+    }
+
+    setSave(true);
+
+    window.setTimeout(async () => {
+      await fetch(
+        `https://${process.env.NEXT_PUBLIC_API_URI}/api/ballot/save`,
+        {
+          method: "POST",
+          body: toFormData(formDataObj),
+        }
+      );
+
+      setSave(false);
+      setCreated(true);
+
+      if (doAfterSave) {
+        doAfterSave();
+      }
+    }, [100]);
   };
 
   const [activeKey, setActiveKey] = useState("start");
-
-  console.log(ballot);
 
   return (
     <>
@@ -55,7 +96,7 @@ export default function Ballot({ ballot }) {
               className="mb-5"
             >
               <Tab eventKey="start" title="Start Here" className="mt-5">
-                <h3>
+                <h3 className="mb-5">
                   Let&apos;s customize your ballot guide in three easy steps.
                 </h3>
                 <h5>1. Name your guide:</h5>
@@ -71,7 +112,7 @@ export default function Ballot({ ballot }) {
                   2. Let&apos;s personalize it - select a graphic to go at the
                   top of your guide:
                 </h5>
-                <div className="bg-white d-flex flex-row">
+                <div className="bg-white d-flex flex-row rounded">
                   {logos.map((logo) => (
                     <div
                       className="logo d-flex flex-row align-items-center p-3"
@@ -117,16 +158,51 @@ export default function Ballot({ ballot }) {
                   <li>Option 2 - Start from scratch and fill out your own</li>
                 </ul> */}
                 <div className="mt-5 d-flex">
-                  <Button
-                    onClick={() => setActiveKey("issues")}
-                    className="ms-auto"
-                  >
-                    Next &gt;
-                  </Button>
+                  {created ? (
+                    <>
+                      <Button
+                        style={{ visibility: "hidden" }}
+                        className="me-auto"
+                        size="lg"
+                      >
+                        &lt; Previous
+                      </Button>
+                      <Button
+                        onClick={saveForm}
+                        className={`mx-auto ${save ? "saving" : "save"}`}
+                        size="lg"
+                      >
+                        <div className="spinner">
+                          <Spinner />
+                        </div>
+                        <span>Save</span>
+                      </Button>
+                      <Button
+                        onClick={() => setActiveKey("issues")}
+                        className="ms-auto"
+                        size="lg"
+                      >
+                        Next &gt;
+                      </Button>
+                    </>
+                  ) : (
+                    <Button
+                      onClick={() => saveForm(() => setActiveKey("issues"))}
+                      className={`ms-auto ${save ? "saving" : "save"}`}
+                      size="lg"
+                    >
+                      <div className="spinner">
+                        <Spinner />
+                      </div>
+                      <span>Save</span>
+                    </Button>
+                  )}
                 </div>
               </Tab>
-              <Tab eventKey="issues" title="Issues">
-                <h3>Let&apos;s Continue Personalizing Your Guide</h3>
+              <Tab eventKey="issues" title="Issues" disabled={!created}>
+                <h3 className="mb-5">
+                  Let&apos;s Continue Personalizing Your Guide
+                </h3>
                 <p>
                   Knowing your top issues helps your friends and family
                   understand your values and how they are reflected in the
@@ -145,7 +221,6 @@ export default function Ballot({ ballot }) {
                           name={`issues.${issue.name}`}
                           label={issue.name}
                           value={issue.name}
-                          onChange={saveForm}
                         />
                       </div>
                     );
@@ -155,59 +230,136 @@ export default function Ballot({ ballot }) {
                   <Button
                     onClick={() => setActiveKey("start")}
                     className="me-auto"
+                    size="lg"
                   >
                     &lt; Previous
                   </Button>
                   <Button
+                    onClick={saveForm}
+                    className={`mx-auto ${save ? "saving" : "save"}`}
+                    size="lg"
+                  >
+                    <div className="spinner">
+                      <Spinner />
+                    </div>
+                    <span>Save</span>
+                  </Button>
+                  <Button
                     onClick={() => setActiveKey("candidates")}
                     className="ms-auto"
+                    size="lg"
                   >
                     Next &gt;
                   </Button>
                 </div>
               </Tab>
-              <Tab eventKey="candidates" title="Candidates">
-                Tab content for Contact
-                <div className="mt-5 d-flex">
+              <Tab eventKey="candidates" title="Candidates" disabled={!created}>
+                <h3 className="mb-5">Great, now comes the fun part!</h3>
+                <p>
+                  From here you can change the recommendations on any and all
+                  races. As an informed voter, your perspective is valuable.
+                </p>
+                <div className="p-3 p-md-5 bg-white">
+                  <ul className="list-ballot">
+                    <BallotBlock section={ballot.country} showAll showChecks />
+                  </ul>
+                </div>
+                <div
+                  className="p-3 d-flex position-sticky"
+                  style={{ bottom: 0, backgroundColor: "var(--navy)" }}
+                >
                   <Button
                     onClick={() => setActiveKey("issues")}
                     className="me-auto"
+                    size="lg"
                   >
                     &lt; Previous
+                  </Button>
+                  <Button
+                    onClick={saveForm}
+                    className={`mx-auto ${save ? "saving" : "save"}`}
+                    size="lg"
+                  >
+                    <div className="spinner">
+                      <Spinner />
+                    </div>
+                    <span>Save</span>
+                  </Button>
+                  <Button
+                    onClick={saveForm}
+                    className={`mx-auto ${save ? "saving" : "save"}`}
+                  >
+                    <Spinner />
+                    <span>Save</span>
                   </Button>
                   <Button
                     onClick={() => setActiveKey("propositions")}
                     className="ms-auto"
+                    size="lg"
                   >
                     Next &gt;
                   </Button>
                 </div>
               </Tab>
-              <Tab eventKey="propositions" title="Propositions">
-                Tab content for Contact
+              <Tab
+                eventKey="propositions"
+                title="Propositions"
+                disabled={!created}
+              >
+                <h3 className="mb-5">Propositions</h3>
                 <div className="mt-5 d-flex">
                   <Button
                     onClick={() => setActiveKey("candidates")}
                     className="me-auto"
+                    size="lg"
                   >
                     &lt; Previous
+                  </Button>
+                  <Button
+                    onClick={saveForm}
+                    className={`mx-auto ${save ? "saving" : "save"}`}
+                    size="lg"
+                  >
+                    <div className="spinner">
+                      <Spinner />
+                    </div>
+                    <span>Save</span>
                   </Button>
                   <Button
                     onClick={() => setActiveKey("judges")}
                     className="ms-auto"
+                    size="lg"
                   >
                     Next &gt;
                   </Button>
                 </div>
               </Tab>
-              <Tab eventKey="judges" title="Judges">
-                Tab content for Contact
+              <Tab eventKey="judges" title="Judges" disabled={!created}>
+                <h3 className="mb-5">Judges</h3>
                 <div className="mt-5 d-flex">
                   <Button
                     onClick={() => setActiveKey("propositions")}
                     className="me-auto"
+                    size="lg"
                   >
                     &lt; Previous
+                  </Button>
+                  <Button
+                    onClick={saveForm}
+                    className={`mx-auto ${save ? "saving" : "save"}`}
+                    size="lg"
+                  >
+                    <div className="spinner">
+                      <Spinner />
+                    </div>
+                    <span>Save</span>
+                  </Button>
+                  <Button
+                    className="ms-auto"
+                    size="lg"
+                    style={{ visibility: "hidden" }}
+                  >
+                    Next &gt;
                   </Button>
                 </div>
               </Tab>

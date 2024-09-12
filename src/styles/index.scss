@@ -223,6 +223,9 @@ hr {
       }
     }
   }
+  ul + ul {
+    margin-top: 1rem;
+  }
   ul.candidates {
     padding: 0;
     margin: 0;
@@ -241,7 +244,7 @@ hr {
     &.party-i {
       background-color: #ffc142;
     }
-    &.party-i {
+    &.party- {
       background-color: #aba6a6;
     }
 
@@ -260,6 +263,9 @@ hr {
     }
     .form-check-label {
       margin-left: 1rem;
+      font-size: 1.5rem;
+    }
+    .label {
       font-size: 1.5rem;
     }
   }
@@ -290,6 +296,37 @@ hr {
     .form-check-label {
       margin-left: 1rem;
       font-size: 1.5rem;
+    }
+  }
+}
+
+.btn {
+  position: relative;
+  .spinner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  &.save {
+    .spinner {
+      visibility: hidden;
+    }
+    span {
+      visibility: visible;
+    }
+  }
+  &.saving {
+    .spinner {
+      visibility: visible;
+      position: absolute;
+    }
+    span {
+      visibility: hidden;
     }
   }
 }
