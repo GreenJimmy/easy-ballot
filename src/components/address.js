@@ -38,7 +38,7 @@ const AutoComplete = ({ onSelect }) => {
             lat: place.geometry.location.lat(),
             lng: place.geometry.location.lng(),
             city: address.city,
-            county: address.county,
+            county: address.county.replace("County", ""),
           }).toString()}`
         );
       }

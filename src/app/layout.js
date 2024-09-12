@@ -2,7 +2,6 @@
 
 import Head from "next/head";
 import { Antonio, Montserrat } from "next/font/google";
-import { ClerkProvider } from "@clerk/nextjs";
 import { Analytics } from "@vercel/analytics/react";
 import Link from "next/link";
 import Container from "react-bootstrap/Container";
@@ -10,13 +9,10 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Navbar from "react-bootstrap/Navbar";
 import NavbarBrand from "react-bootstrap/NavbarBrand";
-import NavbarToggle from "react-bootstrap/NavbarToggle";
-import NavbarCollapse from "react-bootstrap/NavbarCollapse";
 import Nav from "react-bootstrap/Nav";
 import NavLink from "react-bootstrap/NavLink";
 import Button from "react-bootstrap/Button";
-
-import TopNav from "../components/nav";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 import "../styles/index.scss";
 
@@ -43,12 +39,11 @@ export default function RootLayout({ children }) {
       <Head>
         <title>Easy Ballot</title>
       </Head>
-      <ClerkProvider>
-        <html
-          lang="en"
-          className={`${montserrat.variable} ${antonio.variable}`}
-        >
-          <body>
+      <html lang="en" className={`${montserrat.variable} ${antonio.variable}`}>
+        <body>
+          <GoogleOAuthProvider
+            clientId={`${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}`}
+          >
             <Container id="main-container" fluid className="g-0">
               <Navbar expand="sm" variant="dark">
                 <Container>
@@ -64,10 +59,6 @@ export default function RootLayout({ children }) {
                     />
                     <span property="name">EasyBallot</span>
                   </NavbarBrand>
-                  <NavbarToggle />
-                  <NavbarCollapse className="justify-content-end">
-                    <TopNav />
-                  </NavbarCollapse>
                 </Container>
               </Navbar>
               <Container id="content" fluid>
@@ -124,9 +115,9 @@ export default function RootLayout({ children }) {
               </Container>
             </Container>
             <Analytics />
-          </body>
-        </html>
-      </ClerkProvider>
+          </GoogleOAuthProvider>
+        </body>
+      </html>
     </>
   );
 }

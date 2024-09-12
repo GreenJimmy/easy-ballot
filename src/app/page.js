@@ -6,6 +6,7 @@ import Button from "react-bootstrap/Button";
 import { headers } from "next/headers";
 
 import UserLanding from "./user-landing";
+import Login from "../components/login";
 import { getSubDomain } from "../scripts/utils";
 
 export default function Home() {
@@ -41,7 +42,7 @@ export default function Home() {
               Learn More
             </Button>
           </Link>
-          <Link href="/create">
+          <Link href="#lets-get-started">
             <Button size="lg" className="m-2 m-sm-3">
               Get Started
             </Button>
@@ -143,10 +144,12 @@ export default function Home() {
       </Row>
       <Row>
         <Col className="text-center">
-          <h2 className="mb-4">Let&apos;s Get Started!</h2>
-          <Link href="/create">
-            <Button size="lg">Get Started</Button>
-          </Link>
+          <h2 className="mb-4" id="lets-get-started">
+            Let&apos;s Get Started!
+          </h2>
+          <div className="d-flex justify-content-center align-content-center align-items-center">
+            <Login />
+          </div>
         </Col>
       </Row>
     </>

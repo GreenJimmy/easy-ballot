@@ -51,3 +51,10 @@ export const getAddressObject = (address_components) => {
   });
   return address;
 };
+
+export const toFormData = (o) => {
+  return Object.entries(o).reduce(
+    (d, e) => (d.append(...e), d),
+    new FormData()
+  );
+};

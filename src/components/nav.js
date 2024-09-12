@@ -1,9 +1,7 @@
 "use client";
 
-import { useClerk, useUser } from "@clerk/nextjs";
 import Nav from "react-bootstrap/Nav";
 import NavLink from "react-bootstrap/NavLink";
-import { useRouter } from "next/navigation";
 
 export default function TopNav() {
   const { signOut, openSignIn, openSignUp, ...other } = useClerk();

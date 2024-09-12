@@ -199,29 +199,45 @@ hr {
   padding-left: 0;
   list-style: none;
   h4 {
-    font-size: 2.5rem;
+    font-size: 2rem;
     margin-bottom: 1rem;
   }
   ul {
-    padding-left: 0;
+    padding-left: 1rem;
     list-style: none;
     margin-left: 1rem;
     border-left: solid 1px #010101;
-    h5 {
-      margin-left: 2rem;
-      font-size: 2.25rem;
+    h4 {
+      font-size: 2rem;
       margin-bottom: 1rem;
     }
+    li + li {
+      margin-top: 1rem;
+    }
     ul {
-      margin-left: 2rem;
-      padding-left: 2rem;
+      padding-left: 1rem;
       li + li {
         margin-top: 1rem;
       }
     }
   }
   .candidate {
-    background-color: var(--navy);
+    &.party-d {
+      background-color: #1b5080;
+    }
+    &.party-r {
+      background-color: #c23046;
+    }
+    &.party-g {
+      background-color: #2e9463;
+    }
+    &.party-i {
+      background-color: #ffc142;
+    }
+    &.party-i {
+      background-color: #aba6a6;
+    }
+
     color: white;
     padding: 0.5rem 1rem;
     border-radius: 1rem;

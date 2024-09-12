@@ -1,47 +1,55 @@
 import { headers } from "next/headers";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import FormCheck from "react-bootstrap/FormCheck";
-import Button from "react-bootstrap/Button";
-import {
-  EmailShareButton,
-  EmailIcon,
-  FacebookShareButton,
-  FacebookIcon,
-  TwitterShareButton,
-  XIcon,
-} from "react-share";
 
-import { getSubDomain } from "../../scripts/utils";
+import { getSubDomain, toFormData } from "../../scripts/utils";
+import { PrintCopyButtons, SocialButtons } from "../../components/buttons";
+import { BallotBlock } from "../../components/ballot-block";
 
 export default async function Ballot({
   searchParams: { lat, lng, city, county },
 }) {
-  const subDomain = getSubDomain(headers().get("host"));
+  const host = headers().get("host");
+  const subDomain = getSubDomain(host);
 
-  const response = await fetch(
-    `https://${process.env.API_URI}/api/ballot?${new URLSearchParams({
-      subDomain,
-      lat,
-      lng,
-      city,
-      county,
-    }).toString()}`,
+  const siteNameResponse = await fetch(
+    `https://${process.env.API_URI}/name/${subDomain}`,
     {
       method: "GET",
     }
   );
-  const ballot = await response.json();
+  const siteName = await siteNameResponse.text();
 
-  const shareUrl = `https://${subDomain}.easyballot.vote`;
-  const shareTitle = "JT's Ballot";
+  const siteImgResponse = await fetch(
+    `https://${process.env.API_URI}/image/${subDomain}`,
+    {
+      method: "GET",
+    }
+  );
+  const siteImage = await siteImgResponse.text();
+
+  const response = await fetch(`https://${process.env.API_URI}/api/ballot`, {
+    method: "POST",
+    body: toFormData({
+      subdomain: subDomain,
+      lat,
+      lng,
+      city,
+      county,
+    }),
+  });
+
+  const ballot = await response.json();
+  // console.log(ballot);
+
+  const shareUrl = `https://${host}`;
 
   return (
     <>
       <Row className="my-5">
         <Col className="text-center">
           <h2>Welcome to</h2>
-          <h3>“Civic Engagement Beyond Voting”</h3>
+          <h3>{siteName}</h3>
           <h3>2024 Ballot Guide</h3>
         </Col>
       </Row>
@@ -57,58 +65,34 @@ export default async function Ballot({
                 alt="Logo"
               />
             </div>
-            <div className="p-5">
-              <BallotBlock section={ballot.country} order={["elections"]} />
-              <BallotBlock
-                section={ballot.country.demarcations.States[0]}
-                order={["elections"]}
-              />
+            <div className="p-3 p-md-5">
+              <ul className="list-ballot">
+                <BallotBlock section={ballot.country} />
+              </ul>
             </div>
           </div>
+        </Col>
+        <Col lg="2"></Col>
+      </Row>
+      <Row>
+        <Col lg="2"></Col>
+        <Col lg="8" className="text-center">
+          <p>
+            Arizona’s ballot is the longest in state history.
+            <br />
+            Save this for when you vote!
+          </p>
+          <PrintCopyButtons copyString={shareUrl} />
+        </Col>
+        <Col lg="2"></Col>
+      </Row>
+      <Row>
+        <Col lg="2"></Col>
+        <Col lg="8" className="text-center">
+          <SocialButtons shareUrl={shareUrl} shareTitle={siteName} />
         </Col>
         <Col lg="2"></Col>
       </Row>
     </>
   );
 }
-
-const BallotBlock = ({ section, order }) => {
-  return (
-    <ul className="list-ballot">
-      <li>
-        <h4>{section.name}</h4>
-        <ul>
-          {order.map((subSectionName) => {
-            const subSectionObj = section[subSectionName];
-            return subSectionObj.map((subSection) => {
-              return (
-                <li
-                  key={`${section.name}:${subSectionName}:${subSection.name}`}
-                >
-                  <h5>{subSection.name}</h5>
-                  <ul>
-                    {subSection.candidates.map((candidate) => {
-                      return (
-                        <li key={candidate.name}>
-                          <div className="candidate">
-                            <FormCheck
-                              type="radio"
-                              id={`${subSection.name}:${candidate.name}`}
-                              name={subSection.name}
-                              label={candidate.name}
-                              value={candidate.name}
-                            />
-                          </div>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </li>
-              );
-            });
-          })}
-        </ul>
-      </li>
-    </ul>
-  );
-};
