@@ -33,7 +33,7 @@ export default function GetStarted() {
                     style={{ maxWidth: "200px" }}
                     className="d-inline"
                   />
-                  's Ballot Guide
+                  &apos;s Ballot Guide
                 </p>
                 <h5 className="mt-5">
                   2. Let&apos;s personalize it - select a graphic to go at the
