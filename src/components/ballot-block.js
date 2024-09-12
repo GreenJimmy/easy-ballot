@@ -15,7 +15,7 @@ export const BallotBlock = ({ section }) => {
             return (
               <li key={`${section.name}:${election.name}`}>
                 <h4>{election.name}</h4>
-                <ul>
+                <ul className="candidates">
                   {hasPref ? (
                     election.candidates.map((candidate) => {
                       return candidate.picked !== "NotPicked" ? (
@@ -51,7 +51,7 @@ export const BallotBlock = ({ section }) => {
         <li key={`${section.name}:${demarcationKey}`}>
           <h4>{demarcationKey}</h4>
           {demarcations[demarcationKey].map((subSection) => (
-            <ul>
+            <ul key={`${subSection.name}`}>
               <BallotBlock section={subSection} />
             </ul>
           ))}
