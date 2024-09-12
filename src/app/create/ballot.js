@@ -40,6 +40,7 @@ export default function Ballot({ ballot }) {
     }
 
     // check subdomain
+    debugger;
     if (
       formDataObj.subdomain.trim() === "" ||
       !formDataObj.subdomain
@@ -48,7 +49,7 @@ export default function Ballot({ ballot }) {
     ) {
       newErrors.push("subdomain");
     }
-
+    console.log(newErrors);
     setErrors(newErrors);
     return newErrors.length > 0;
   };

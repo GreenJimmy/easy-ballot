@@ -9,6 +9,8 @@ const Login = () => {
   return (
     <GoogleLogin
       onSuccess={async (credentialResponse) => {
+        console.log(credentialResponse);
+
         const response = await fetch(
           `https://${process.env.NEXT_PUBLIC_API_URL}/auth/google`,
           {
@@ -18,6 +20,10 @@ const Login = () => {
             }),
           }
         );
+
+        const account_id = await response.text();
+        console.log(account_id);
+        sessionStorage.setItem("account_id", account_id);
 
         router.push("/create");
       }}
