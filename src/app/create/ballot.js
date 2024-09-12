@@ -121,6 +121,7 @@ export default function Ballot({ ballot }) {
                     name="ballot_name"
                     style={{ maxWidth: "200px" }}
                     className="d-inline"
+                    defaultValue={ballot.name}
                   />
                   &apos;s Ballot Guide
                 </p>
@@ -144,7 +145,7 @@ export default function Ballot({ ballot }) {
                         type="radio"
                         name="image"
                         value={logo}
-                        defaultChecked={index === 0}
+                        defaultChecked={ballot.image === "logo" || index === 0}
                       ></Form.Check>
                       <img
                         src={`/img/logos/${logo}`}
