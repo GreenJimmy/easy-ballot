@@ -13,7 +13,7 @@ import FormCheck from "react-bootstrap/FormCheck";
 import { toFormData } from "../../scripts/utils";
 import { BallotBlock } from "../../components/ballot-block";
 
-const logos = ["2.jpg", "1.jpg"];
+const logos = ["1.jpg", "2.jpg"];
 
 export default function Ballot({ ballot }) {
   const formRef = useRef();
@@ -113,7 +113,7 @@ export default function Ballot({ ballot }) {
                   top of your guide:
                 </h5>
                 <div className="bg-white d-flex flex-row rounded">
-                  {logos.map((logo) => (
+                  {logos.map((logo, index) => (
                     <div
                       className="logo d-flex flex-row align-items-center p-3"
                       key={logo}
@@ -122,6 +122,7 @@ export default function Ballot({ ballot }) {
                         type="radio"
                         name="image"
                         value={logo}
+                        defaultChecked={index === 0}
                       ></Form.Check>
                       <img
                         src={`/img/logos/${logo}`}
