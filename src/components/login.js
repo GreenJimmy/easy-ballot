@@ -6,7 +6,7 @@ const Login = () => {
   return (
     <GoogleLogin
       onSuccess={(credentialResponse) => {
-        console.log(credentialResponse);
+        sessionStorage.setItem("gAuth", JSON.stringify(credentialResponse));
       }}
       onError={() => {
         console.log("Login Failed");

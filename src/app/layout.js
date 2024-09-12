@@ -34,6 +34,7 @@ export const viewport = {
 };
 
 export default function RootLayout({ children }) {
+  console.log(process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID);
   return (
     <>
       <Head>
