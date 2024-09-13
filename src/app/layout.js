@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 
 import Head from "next/head";
-import type { Metadata } from "next";
 import { Antonio, Montserrat } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import Link from "next/link";
