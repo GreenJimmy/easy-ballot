@@ -20,75 +20,93 @@ export default function Ballot({ ballot }) {
   const formRef = useRef();
 
   const [save, setSave] = useState();
-  const [created, setCreated] = useState();
-  const [errors, setErrors] = useState([]);
+  const [created, setCreated] = useState(ballot.name);
+  const [errors, setErrors] = useState({});
 
-  const validateForm = (formDataObj) => {
-    const newErrors = [];
-
-    console.log(formDataObj);
+  const validateForm = async (formDataObj) => {
+    const newErrors = {};
 
     // check ballot_name
     if (formDataObj.ballot_name.trim() === "") {
-      newErrors.push("ballot_name");
+      newErrors.ballot_name = "Your ballots name can't be empty.";
     }
 
     // check if logo picked
     // TODO: check if custom and if so where is the file?
     if (formDataObj.image.trim() === "") {
-      newErrors.push("image");
+      newErrors.image = "You must pick an Logo.";
     }
 
     // check subdomain
-    debugger;
+    if (formDataObj.subdomain.trim() === "") {
+      newErrors.subdomain = "Vanity URL can not be blank.";
+    }
     if (
-      formDataObj.subdomain.trim() === "" ||
       !formDataObj.subdomain
         .trim()
         .match(/^[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]$/)
     ) {
-      newErrors.push("subdomain");
+      newErrors.subdomain =
+        "Vanity URL must 3 characters long and only contain: letters, numbers and hyphens.";
     }
-    console.log(newErrors);
+    // TODO: check if subdomain is taken
+    const takenResponse = await fetch(
+      `https://${
+        process.env.NEXT_PUBLIC_API_URL
+      }/api/lookup/${formDataObj.subdomain.trim()}`,
+      {
+        method: "get",
+      }
+    );
+    const taken = await takenResponse.text();
+    console.log("taken", taken);
+    if (taken.length && taken.indexOf(formDataObj.subdomain) > -1) {
+      newErrors.subdomain = "Sorry but that Vanity URL is taken.";
+    }
+
     setErrors(newErrors);
-    return newErrors.length > 0;
+    return Object.keys(newErrors).length > 0;
   };
 
-  const saveForm = (doAfterSave) => {
+  const saveForm = async (doAfterSave) => {
     if (save) {
-      return false;
-    }
-
-    const formElements = Array.from(formRef.current.elements);
-    const formDataObj = {};
-    formElements.forEach((formElement) => {
-      if (formElement.tagName === "INPUT") {
-        if (formElement.type !== "checkbox" && formElement.type !== "radio") {
-          formDataObj[formElement.name] = formElement.value;
-        } else if (
-          (formElement.type === "checkbox" || formElement.type === "radio") &&
-          formElement.checked
-        ) {
-          formDataObj[formElement.name] =
-            formElement.type === "checkbox" ? true : formElement.value;
-        }
-      }
-    });
-
-    if (validateForm(formDataObj)) {
       return false;
     }
 
     setSave(true);
 
     window.setTimeout(async () => {
-      await fetch(
+      const formElements = Array.from(formRef.current.elements);
+      const formDataObj = {};
+      formElements.forEach((formElement) => {
+        if (formElement.tagName === "INPUT") {
+          if (formElement.type !== "checkbox" && formElement.type !== "radio") {
+            formDataObj[formElement.name] = formElement.value;
+          } else if (
+            (formElement.type === "checkbox" || formElement.type === "radio") &&
+            formElement.checked
+          ) {
+            formDataObj[formElement.name] =
+              formElement.type === "checkbox" ? true : formElement.value;
+          }
+        }
+      });
+
+      if (await validateForm(formDataObj)) {
+        setSave(false);
+        return false;
+      }
+
+      const savedResponse = await fetch(
         `https://${process.env.NEXT_PUBLIC_API_URL}/api/ballot/save`,
         {
           method: "POST",
           body: toFormData(formDataObj),
         }
       );
+      const saved = await savedResponse.json();
+
+      console.log("saved", saved);
 
       setSave(false);
       setCreated(true);
@@ -126,10 +144,8 @@ export default function Ballot({ ballot }) {
                   />
                   &apos;s Ballot Guide
                 </p>
-                {errors.indexOf("ballot_name") > -1 ? (
-                  <Alert variant="danger">
-                    Your ballots name can&apos;t be empty.
-                  </Alert>
+                {Object.keys(errors).indexOf("ballot_name") > -1 ? (
+                  <Alert variant="danger">{errors.ballot_name}</Alert>
                 ) : null}
 
                 <h5 className="mt-5">
@@ -155,10 +171,8 @@ export default function Ballot({ ballot }) {
                     </div>
                   ))}
                 </div>
-                {errors.indexOf("image") > -1 ? (
-                  <Alert variant="danger">
-                    You need to attach a custom image.
-                  </Alert>
+                {Object.keys(errors).indexOf("image") > -1 ? (
+                  <Alert variant="danger">{errors.image}</Alert>
                 ) : null}
                 <h5 className="mt-5">3. Pick your vanity URL:</h5>
                 <p>
@@ -169,11 +183,24 @@ export default function Ballot({ ballot }) {
                   />
                   .easyballot.vote
                 </p>
-                {errors.indexOf("subdomain") > -1 ? (
-                  <Alert variant="danger">
-                    Vanity URLs can not be empty and must only contain letters,
-                    numbers and dashes.
-                  </Alert>
+                {created ? (
+                  <div className="my-3 d-flex align-items-center">
+                    <a
+                      href={`https://${process.env.NEXT_PUBLIC_API_URL}/qr/${subdomain}`}
+                      download
+                      className="me-3"
+                    >
+                      <img
+                        style={{ width: "10rem", height: "10rem" }}
+                        src={`https://${process.env.NEXT_PUBLIC_API_URL}/qr/${subdomain}`}
+                      />
+                      <Button className="ms-3">Click to download</Button>
+                    </a>
+                  </div>
+                ) : null}
+
+                {Object.keys(errors).indexOf("subdomain") > -1 ? (
+                  <Alert variant="danger">{errors.subdomain}</Alert>
                 ) : null}
 
                 {/* <h5 className="mt-5">
@@ -319,13 +346,6 @@ export default function Ballot({ ballot }) {
                     <div className="spinner">
                       <Spinner />
                     </div>
-                    <span>Save</span>
-                  </Button>
-                  <Button
-                    onClick={saveForm}
-                    className={`mx-auto ${save ? "saving" : "save"}`}
-                  >
-                    <Spinner />
                     <span>Save</span>
                   </Button>
                   <Button
