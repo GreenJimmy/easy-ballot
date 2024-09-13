@@ -52,12 +52,6 @@ export const metadata = {
     type: "website",
   },
   icons: {
-    icon: [
-      { url: "/icon.png" },
-      new URL("/icon.png", "https://example.com"),
-      { url: "/icon-dark.png", media: "(prefers-color-scheme: dark)" },
-    ],
-    shortcut: ["/shortcut-icon.png"],
     apple: [
       {
         rel: "apple-touch-icon",
@@ -77,12 +71,6 @@ export const metadata = {
         rel: "icon",
         url: "/favicon-32x32.png",
         sizes: "32x32",
-        type: "image/png",
-      },
-      {
-        rel: "icon",
-        url: "/apple-touch-icon.png",
-        sizes: "180x180",
         type: "image/png",
       },
     ],
