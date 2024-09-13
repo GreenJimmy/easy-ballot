@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 
 import Head from "next/head";
+import type { Metadata } from "next";
 import { Antonio, Montserrat } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import Link from "next/link";
@@ -33,6 +34,63 @@ export const viewport = {
   initialScale: 1,
 };
 
+export const metadata = {
+  title: "EasyBallot",
+  description: "Helping Friends Vote with Confidence",
+  openGraph: {
+    title: "EasyBallot",
+    description: "Helping Friends Vote with Confidence",
+    url: "https://easyballot.vote",
+    siteName: "EasyBallot",
+    images: [
+      {
+        url: "https://easyballot.vote/og.png", // Must be an absolute URL
+        width: 800,
+        height: 600,
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  icons: {
+    icon: [
+      { url: "/icon.png" },
+      new URL("/icon.png", "https://example.com"),
+      { url: "/icon-dark.png", media: "(prefers-color-scheme: dark)" },
+    ],
+    shortcut: ["/shortcut-icon.png"],
+    apple: [
+      {
+        rel: "apple-touch-icon",
+        url: "/apple-touch-icon.png",
+        sizes: "180x180",
+        type: "image/png",
+      },
+    ],
+    other: [
+      {
+        rel: "icon",
+        url: "/favicon-16x16.png",
+        sizes: "16x16",
+        type: "image/png",
+      },
+      {
+        rel: "icon",
+        url: "/favicon-32x32.png",
+        sizes: "32x32",
+        type: "image/png",
+      },
+      {
+        rel: "icon",
+        url: "/apple-touch-icon.png",
+        sizes: "180x180",
+        type: "image/png",
+      },
+    ],
+  },
+  manifest: "https://easyballot.vote/site.webmanifest",
+};
+
 export default function RootLayout({ children }) {
   return (
     <>
@@ -56,14 +114,6 @@ export default function RootLayout({ children }) {
           href="/favicon-16x16.png"
         />
         <link rel="manifest" href="/site.webmanifest" />
-        <meta name="msapplication-TileColor" content="#ffffff" />
-        <meta name="theme-color" content="#ffffff" />
-        <meta property="og:title" content="EasyBallot" />
-        <meta
-          property="og:description"
-          content="Helping Friends Vote with Confidence"
-        />
-        <meta property="og:image" content="/og.png" />
       </Head>
       <html lang="en" className={`${montserrat.variable} ${antonio.variable}`}>
         <body>
