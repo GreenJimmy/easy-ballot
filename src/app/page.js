@@ -16,13 +16,13 @@ export default function Home() {
     <>
       <Row className="mb-5">
         <Col lg="3" className="align-items-center d-none d-lg-flex">
-          <img src="/img/stock_l.jpg" className="w-100" alt="Just Voted" />
+          <img src="/img/home/stock_l.jpg" className="w-100" alt="Just Voted" />
         </Col>
         <Col lg="6" className="d-flex align-items-center">
-          <img src="/img/stock_c.jpg" className="w-100" alt="Jst Voted" />
+          <img src="/img/home/stock_c.jpg" className="w-100" alt="Jst Voted" />
         </Col>
         <Col lg="3" className="align-items-center d-none d-lg-flex">
-          <img src="/img/stock_r.jpg" className="w-100" alt="Just Voted" />
+          <img src="/img/home/stock_r.jpg" className="w-100" alt="Just Voted" />
         </Col>
       </Row>
       <Row>
@@ -68,7 +68,7 @@ export default function Home() {
               </Col>
               <Col lg="6" xxl="8" className="d-flex align-items-center">
                 <img
-                  src="/img/how-it-works.jpg"
+                  src="/img/home/how-it-works.jpg"
                   className="w-100"
                   alt="How it Works"
                 />
@@ -101,7 +101,7 @@ export default function Home() {
             <Row>
               <Col lg="4" className="text-center mt-5">
                 <img
-                  src="/img/create.svg"
+                  src="/img/home/create.svg"
                   style={{ height: "10rem" }}
                   alt="Step 1 - Create"
                 />
@@ -112,7 +112,7 @@ export default function Home() {
               </Col>
               <Col lg="4" className="text-center mt-5 step-2">
                 <img
-                  src="/img/share.svg"
+                  src="/img/home/share.svg"
                   style={{ height: "10rem" }}
                   alt="Step 2 - Share"
                 />
@@ -123,7 +123,7 @@ export default function Home() {
               </Col>
               <Col lg="4" className="text-center mt-5 step-3">
                 <img
-                  src="/img/win.svg"
+                  src="/img/home/win.svg"
                   style={{ height: "10rem" }}
                   alt="Step 3 - Win"
                 />

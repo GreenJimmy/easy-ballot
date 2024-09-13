@@ -59,7 +59,7 @@ export default function Ballot({ ballot }) {
       }
     );
     const taken = await takenResponse.text();
-    console.log("taken", taken);
+
     if (taken.length && taken.indexOf(formDataObj.subdomain) > -1) {
       newErrors.subdomain = "Sorry but that Vanity URL is taken.";
     }

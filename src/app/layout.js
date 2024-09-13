@@ -34,11 +34,36 @@ export const viewport = {
 };
 
 export default function RootLayout({ children }) {
-  console.log(process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID);
   return (
     <>
       <Head>
         <title>Easy Ballot</title>
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href="/apple-touch-icon.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="/favicon-32x32.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href="/favicon-16x16.png"
+        />
+        <link rel="manifest" href="/site.webmanifest" />
+        <meta name="msapplication-TileColor" content="#ffffff" />
+        <meta name="theme-color" content="#ffffff" />
+        <meta property="og:title" content="EasyBallot" />
+        <meta
+          property="og:description"
+          content="Helping Friends Vote with Confidence"
+        />
+        <meta property="og:image" content="/og.png" />
       </Head>
       <html lang="en" className={`${montserrat.variable} ${antonio.variable}`}>
         <body>
@@ -58,7 +83,6 @@ export default function RootLayout({ children }) {
                       className="me-3"
                       alt="EasyBallot.vote"
                     />
-                    <span property="name">EasyBallot</span>
                   </NavbarBrand>
                 </Container>
               </Navbar>

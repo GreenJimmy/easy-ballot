@@ -14,7 +14,7 @@ export default function UserLanding() {
       <Row>
         <Col lg="3"></Col>
         <Col lg="6" className="d-flex align-items-center">
-          <img src="/img/stock_c.jpg" className="w-100" alt="Jst Voted" />
+          <img src="/img/home/stock_c.jpg" className="w-100" alt="Jst Voted" />
         </Col>
         <Col lg="3" className="align-items-center d-none d-lg-flex"></Col>
       </Row>
@@ -32,7 +32,7 @@ export default function UserLanding() {
       <Row>
         <Col md="4" className="text-center mt-5 ">
           <img
-            src="/img/create.svg"
+            src="/img/home/create.svg"
             style={{ height: "10rem" }}
             alt="Step 1 - Address"
           />
@@ -44,7 +44,7 @@ export default function UserLanding() {
         </Col>
         <Col md="4" className="text-center mt-5 ">
           <img
-            src="/img/create.svg"
+            src="/img/home/create.svg"
             style={{ height: "10rem" }}
             alt="Step 2 - Print"
           />
@@ -55,7 +55,7 @@ export default function UserLanding() {
         </Col>
         <Col md="4" className="text-center mt-5 ">
           <img
-            src="/img/create.svg"
+            src="/img/home/create.svg"
             style={{ height: "10rem" }}
             alt="Step 3 - View"
           />
