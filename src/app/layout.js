@@ -75,7 +75,7 @@ export const metadata = {
       },
     ],
   },
-  manifest: "https://easyballot.vote/site.webmanifest",
+  manifest: "/site.webmanifest",
 };
 
 export default function RootLayout({ children }) {
